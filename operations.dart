@@ -9,7 +9,7 @@ depositMoney() {
   int accountIndex = int.parse(stdin.readLineSync().toString());
   stdout.write("Combien voulez vous déposer ? : ");
   int amount = int.parse(stdin.readLineSync().toString());
-  if (accountIndex > 0 && accountIndex < clients.length + 1) {
+  if (accountIndex > 0 && accountIndex < clients.length+1) {
     print("\n");
     print("Operation en cours ...");
     print("\n");

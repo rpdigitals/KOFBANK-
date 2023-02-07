@@ -3,17 +3,38 @@ import 'operations.dart';
 import 'Class/client.dart';
 import 'Class/account.dart';
 
-Client test = Client(
-    "firstName", "lastName", "telephone", "birthDay", "email", Account("c"));
 const int tabSpace = 25;
 const String space = ' ';
 const String line = '_';
-List<Client> clients = [test];
-
-//trier une liste de string par oredre alphabetique
+List<Client> clients = [];
+// List<String> clientsName = [];
+// List<String> clientsNameOrdered = [];
+//List<Client> clientsOrdered = [];
+//ordonner une liste de strings par ordre croissant
 
 lineSpace() {
   print('\n');
+}
+
+orderClient() {
+  List<String> clientsName = [];
+  List<String> clientsNameOrdered = [];
+  List<Client> clientsOrdered = [];
+  for (Client client in clients) {
+    String firstName = client.getClient()["firstName"];
+    String lastName = client.getClient()["lastName"];
+    String fullName = firstName + " " + lastName;
+    clientsName.add(fullName);
+  }
+  for (int i = 0; i < clientsName.length; i++) {
+    clientsNameOrdered.add(clientsName[i]);
+  }
+  clientsNameOrdered.sort((a, b) => a.compareTo(b));
+
+  for (String name in clientsNameOrdered) {
+    clientsOrdered.add(clients[clientsName.indexOf(name)]);
+  }
+  return clientsOrdered;
 }
 
 tableHead() {
@@ -42,19 +63,24 @@ tableHead() {
 
 userList() {
   tableHead();
-  for (int i = 0; i < clients.length; i++) {
+  List<Client> clientsOrdered = orderClient();
+  for (int i = 0; i < clientsOrdered.length; i++) {
     String n = (i + 1).toString();
-    String nameTd = clients[i].getClient()['firstName'];
-    String telephoneTd = clients[i].getClient()['telephone'];
-    String soldeTd =
-        clients[i].getClient()['account'].getAccount()['amount'].toString();
+    String nameTd = clientsOrdered[i].getClient()['firstName'];
+    String name2Td = clientsOrdered[i].getClient()['lastName'];
+    String fullNameTd = nameTd + " " + name2Td;
+    String telephoneTd = clientsOrdered[i].getClient()['telephone'];
+    String soldeTd = clientsOrdered[i]
+        .getClient()['account']
+        .getAccount()['amount']
+        .toString();
     var accountTypeTd =
-        clients[i].getClient()['account'].getAccount()['accountType'];
+        clientsOrdered[i].getClient()['account'].getAccount()['accountType'];
     stdout.write(n);
     stdout.write(space * (tabSpace - n.length));
 
-    stdout.write(nameTd);
-    stdout.write(space * (tabSpace - nameTd.length));
+    stdout.write(fullNameTd);
+    stdout.write(space * (tabSpace - fullNameTd.length));
 
     stdout.write(telephoneTd);
     stdout.write(space * (tabSpace - telephoneTd.length));
@@ -72,19 +98,24 @@ userList() {
 
 showClients() {
   tableHead();
-  for (int i = 0; i < clients.length; i++) {
+  List<Client> clientsOrdered = orderClient();
+  for (int i = 0; i < clientsOrdered.length; i++) {
     String n = (i + 1).toString();
-    String nameTd = clients[i].getClient()['firstName'];
-    String telephoneTd = clients[i].getClient()['telephone'];
-    String soldeTd =
-        clients[i].getClient()['account'].getAccount()['amount'].toString();
+    String nameTd = clientsOrdered[i].getClient()['firstName'];
+    String name2Td = clientsOrdered[i].getClient()['lastName'];
+    String fullNameTd = nameTd + " " + name2Td;
+    String telephoneTd = clientsOrdered[i].getClient()['telephone'];
+    String soldeTd = clientsOrdered[i]
+        .getClient()['account']
+        .getAccount()['amount']
+        .toString();
     var accountTypeTd =
-        clients[i].getClient()['account'].getAccount()['accountType'];
+        clientsOrdered[i].getClient()['account'].getAccount()['accountType'];
     stdout.write(n);
     stdout.write(space * (tabSpace - n.length));
 
-    stdout.write(nameTd);
-    stdout.write(space * (tabSpace - nameTd.length));
+    stdout.write(fullNameTd);
+    stdout.write(space * (tabSpace - fullNameTd.length));
 
     stdout.write(telephoneTd);
     stdout.write(space * (tabSpace - telephoneTd.length));
@@ -93,7 +124,7 @@ showClients() {
     stdout.write(space * (tabSpace - soldeTd.length));
 
     stdout.write(accountTypeTd);
-    print('\n');
+    lineSpace();
   }
   print(line * tabSpace * 5);
   lineSpace();
